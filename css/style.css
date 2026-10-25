@@ -1,0 +1,964 @@
+/* ==========================================================
+   Galleri for tusjtegninger – felles stil
+   ========================================================== */
+
+:root {
+  --papir: #fbfaf6;
+  --papir-mork: #f2f0e8;
+  --blekk: #121212;
+  --blekk-myk: #3a3a37;
+  --graa: #6d6c66;
+  --linje: rgba(18, 18, 18, 0.85);
+  --linje-svak: rgba(18, 18, 18, 0.14);
+  /* Den eneste aksentfargen: den røde «solgt»-prikken fra gallerier */
+  --aksent: #c0392b;
+
+  --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--blekk);
+  background-color: var(--papir);
+  /* Svak papirtekstur: fin fiberstøy + noen store, nesten usynlige flekker */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.075'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)' opacity='.06'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #fffefb 0%, var(--papir) 55%, var(--papir-mork) 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+::selection { background: var(--blekk); color: var(--papir); }
+
+:focus-visible {
+  outline: 1.5px solid var(--blekk);
+  outline-offset: 4px;
+}
+
+.skjult {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Håndtegnede streker ---------- */
+
+.strek-svg {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+  fill: none;
+  stroke: var(--linje);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-ramme] { position: relative; }
+
+.strek-svg.ramme { inset: 0; width: 100%; height: 100%; }
+
+/* ---------- Topp ---------- */
+
+.topp {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px var(--gutter) 10px;
+}
+
+.merke {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.meny {
+  display: flex;
+  gap: clamp(14px, 3vw, 34px);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.meny a {
+  position: relative;
+  text-decoration: none;
+  padding: 4px 0;
+  white-space: nowrap;
+  color: var(--blekk-myk);
+}
+
+.meny a:hover,
+.meny a[aria-current="page"] { color: var(--blekk); }
+
+.meny a .strek-svg { left: 0; bottom: -2px; width: 100%; height: 8px; }
+
+@media (max-width: 560px) {
+  .topp { flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 16px; }
+  .meny { font-size: 0.7rem; letter-spacing: 0.1em; gap: 18px; }
+}
+
+/* ---------- Knapper ---------- */
+
+.knapp {
+  --kant: var(--blekk);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 22px;
+  border: 1px solid var(--kant);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blekk);
+  font: 500 0.82rem/1 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.knapp:hover { background: var(--blekk); color: var(--papir); }
+
+.knapp-hoved { background: var(--blekk); color: var(--papir); }
+.knapp-hoved:hover { background: transparent; color: var(--blekk); }
+
+.knapp[disabled] { opacity: 0.5; cursor: wait; }
+
+.lenke-knapp {
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font: inherit;
+  color: var(--blekk-myk);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+
+/* ---------- Typografi ---------- */
+
+.overlinje {
+  margin: 0 0 14px;
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--graa);
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.tittel-stor { font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 300; }
+
+.understrek { position: relative; display: inline-block; }
+.understrek .strek-svg { left: -2%; bottom: -0.12em; width: 104%; height: 0.3em; }
+
+/* ---------- Forside ---------- */
+
+.forside {
+  position: relative;
+  min-height: calc(100svh - 80px);
+  display: grid;
+  place-items: center;
+  padding: 0 var(--gutter) 60px;
+  overflow: hidden;
+}
+
+.forside-tegning {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  fill: none;
+  stroke: rgba(18, 18, 18, 0.3);
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.forside-innhold {
+  position: relative;
+  text-align: center;
+  max-width: 1100px;
+}
+
+.navn {
+  font-size: clamp(3.2rem, 12vw, 10rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.25em;
+  overflow-wrap: anywhere;
+}
+
+.navn em { font-style: italic; }
+
+.ingress {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--blekk-myk);
+  max-width: 34ch;
+  margin: 0 auto 2.4rem;
+}
+
+.inngang {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 6px;
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.inngang svg {
+  width: 74px;
+  height: 20px;
+  fill: none;
+  stroke: var(--blekk);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.6s var(--ease);
+}
+
+.inngang:hover svg { transform: translateX(8px); }
+
+.forside-status {
+  margin-top: 1.4rem;
+  font-size: 0.8rem;
+  color: var(--graa);
+  letter-spacing: 0.06em;
+}
+
+.slik {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px var(--gutter) 110px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.slik li { list-style: none; }
+
+.slik-nr {
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.slik h2 { font-size: 1.7rem; margin-bottom: 8px; }
+.slik p { margin: 0; color: var(--blekk-myk); }
+
+@media (max-width: 720px) {
+  .slik { grid-template-columns: 1fr; padding-bottom: 70px; }
+}
+
+/* ---------- Tekstsider (Om, Vilkår) ---------- */
+
+.side {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(36px, 8vw, 96px) var(--gutter) 100px;
+}
+
+.side-topp { margin-bottom: clamp(36px, 6vw, 72px); }
+
+.om {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.portrett {
+  margin: 0;
+  padding: 18px;
+}
+
+.portrett img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--papir-mork);
+  filter: grayscale(1) contrast(1.05);
+}
+
+.portrett figcaption,
+.bildetekst {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--graa);
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+.brodtekst { max-width: 62ch; font-size: 1.04rem; }
+.brodtekst p { margin: 0 0 1.1em; }
+.brodtekst .innledning {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  line-height: 1.35;
+  color: var(--blekk);
+}
+
+.brodtekst h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 1.8em 0 0.5em; }
+
+.signatur {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .om { grid-template-columns: 1fr; }
+  .portrett { max-width: 440px; }
+}
+
+.vilkar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.vilkar-meny {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  font-size: 0.9rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: v;
+}
+
+.vilkar-meny li { margin-bottom: 8px; }
+.vilkar-meny a { text-decoration: none; color: var(--blekk-myk); }
+.vilkar-meny a:hover { color: var(--blekk); text-decoration: underline; text-underline-offset: 4px; }
+
+.vilkar-del { margin-bottom: 48px; scroll-margin-top: 24px; }
+.vilkar-del h2 {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin-bottom: 14px;
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+.vilkar-del h2 span { font-style: italic; color: var(--graa); font-size: 0.7em; }
+.vilkar-del p, .vilkar-del li { color: var(--blekk-myk); max-width: 64ch; }
+.vilkar-del ul { padding-left: 1.1em; }
+.vilkar-del li { margin-bottom: 6px; }
+
+.merknad {
+  font-size: 0.85rem;
+  color: var(--graa);
+  border-top: 1px solid var(--linje-svak);
+  padding-top: 18px;
+  margin-top: 56px;
+}
+
+@media (max-width: 800px) {
+  .vilkar { grid-template-columns: 1fr; }
+  .vilkar-meny { position: static; }
+}
+
+/* ---------- Bunn ---------- */
+
+.bunn {
+  position: relative;
+  padding: 34px var(--gutter) 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--graa);
+}
+
+.bunn .strek-svg { left: var(--gutter); right: var(--gutter); top: 0; width: calc(100% - 2 * var(--gutter)); height: 8px; }
+.bunn a { color: var(--blekk-myk); }
+
+/* ==========================================================
+   Galleriet
+   ========================================================== */
+
+.galleri-side {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overscroll-behavior: none;
+}
+
+#scene-lerret {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  outline: none;
+}
+
+.scene {
+  position: relative;
+  z-index: 5;
+  min-height: 0;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.galleri-side.over-ark .scene { cursor: zoom-in; }
+.galleri-side.over-nabo .scene { cursor: pointer; }
+
+/* Enkel 2D-visning (redusert bevegelse / uten WebGL) */
+.ark-2d {
+  position: absolute;
+  inset: 4% var(--gutter) 3%;
+  margin: 0;
+  display: none;
+  place-items: center;
+}
+
+.modus-2d .ark-2d { display: grid; }
+
+.ark-2d .ark-ramme {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  padding: clamp(8px, 1.6vw, 18px);
+  background: #fefdfb;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 18px 40px -18px rgba(0, 0, 0, 0.28);
+  transition: opacity 0.45s ease;
+}
+
+.ark-2d img {
+  max-width: 100%;
+  max-height: calc(100dvh - 380px);
+  width: auto;
+  height: auto;
+  min-height: 200px;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+.ark-2d.bytter .ark-ramme { opacity: 0; }
+
+.lasteindikator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--graa);
+  font-size: 1.1rem;
+  transition: opacity 0.6s;
+}
+
+.lastet .lasteindikator { opacity: 0; pointer-events: none; }
+
+/* Navigasjon mellom verk */
+.verk-nav {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 calc(var(--gutter) - 8px);
+  pointer-events: none;
+}
+
+.pil {
+  pointer-events: auto;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--blekk);
+  border-radius: 50%;
+  transition: opacity 0.4s, transform 0.5s var(--ease);
+}
+
+.pil svg {
+  width: 44px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pil:hover { transform: translateX(4px); }
+.pil.forrige:hover { transform: translateX(-4px); }
+.pil[disabled] { opacity: 0.15; cursor: default; transform: none; }
+
+.teller {
+  position: absolute;
+  z-index: 6;
+  right: var(--gutter);
+  bottom: 10px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--blekk-myk);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.teller-linje {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.teller-linje button {
+  width: 16px;
+  height: 20px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.teller-linje button::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 50%;
+  height: 1px;
+  background: var(--blekk);
+  opacity: 0.25;
+  transition: opacity 0.4s, transform 0.4s var(--ease);
+}
+
+.teller-linje button[aria-current="true"]::after { opacity: 1; transform: scaleY(2); }
+.teller-linje button.solgt::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--aksent);
+}
+
+.hint {
+  position: absolute;
+  z-index: 6;
+  left: var(--gutter);
+  bottom: 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graa);
+  transition: opacity 1s;
+}
+
+.hint.borte { opacity: 0; }
+
+/* Info under verket */
+.verk-info {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(20px, 4vw, 64px);
+  align-items: end;
+  padding: 10px var(--gutter) clamp(18px, 3vh, 34px);
+  max-height: 46vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.verk-nr {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--graa);
+  margin: 0 0 4px;
+}
+
+.verk-tittel {
+  font-size: clamp(2.2rem, 4.6vw, 3.8rem);
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.verk-meta {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blekk-myk);
+}
+
+.verk-meta span + span::before { content: "·"; margin: 0 0.6em; color: var(--graa); }
+
+.verk-beskrivelse {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--blekk-myk);
+  font-size: 0.95rem;
+}
+
+/* Auksjonsboksen */
+.auksjon {
+  padding: 18px 22px 20px;
+  background: rgba(251, 250, 246, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.auksjon-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blekk-myk);
+}
+
+.prikk {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--blekk);
+  flex: none;
+}
+
+.auksjon[data-status="aktiv"] .prikk {
+  background: var(--blekk);
+  animation: puls 2.4s ease-in-out infinite;
+}
+
+.auksjon[data-status="solgt"] .prikk { background: var(--aksent); border-color: var(--aksent); }
+
+@keyframes puls {
+  50% { opacity: 0.25; }
+}
+
+.auksjon-tall {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 8px 22px;
+  margin: 0 0 16px;
+}
+
+.auksjon-tall div { min-width: 0; }
+
+.auksjon-tall dt {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graa);
+  margin-bottom: 2px;
+}
+
+.auksjon-tall dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.auksjon-tall .stort { font-size: 1.85rem; }
+.auksjon-tall .ingen { font-style: italic; color: var(--graa); font-size: 1.2rem; }
+
+.sluttdato { font-size: 0.78rem; color: var(--graa); margin: -6px 0 14px; }
+
+.auksjon-knapper { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.auksjon-slutt {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.auksjon-slutt strong {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.auksjon-slutt p { margin: 0; color: var(--blekk-myk); font-size: 0.9rem; flex: 1 1 220px; }
+
+.auksjon[data-status="solgt"] .auksjon-slutt strong { display: inline-flex; align-items: center; gap: 12px; }
+.auksjon[data-status="solgt"] .auksjon-slutt strong::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--aksent);
+}
+
+@media (max-width: 900px) {
+  .verk-info { grid-template-columns: 1fr; gap: 14px; align-items: start; max-height: 52vh; max-height: 52dvh; }
+  .verk-tittel { font-size: 2.3rem; margin-bottom: 4px; }
+  .auksjon-tall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .auksjon-tall dd { white-space: normal; font-size: 1.2rem; }
+  .auksjon-tall .stort { font-size: 1.6rem; }
+  .verk-info { max-height: 46vh; max-height: 46dvh; }
+  .verk-beskrivelse { font-size: 0.9rem; }
+  .auksjon { padding: 16px 16px 18px; }
+  .knapp { flex: 1 1 auto; }
+  .hint { display: none; }
+  .teller { bottom: 4px; }
+  .verk-nav { top: auto; bottom: 0; translate: none; }
+  .pil { width: 48px; height: 44px; }
+  .verk-nav { justify-content: flex-start; gap: 4px; }
+}
+
+@media (max-height: 640px) and (min-width: 901px) {
+  .verk-beskrivelse { display: none; }
+}
+
+/* ---------- Dialoger ---------- */
+
+.dialog {
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 0;
+  background: var(--papir);
+  color: var(--blekk);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.45);
+  overflow: visible;
+}
+
+.dialog::backdrop {
+  background: rgba(251, 250, 246, 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-innhold {
+  position: relative;
+  padding: clamp(22px, 5vw, 36px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+}
+
+.dialog h2 { font-size: 2.2rem; font-weight: 300; margin-bottom: 8px; }
+
+.dialog-info { margin: 0 0 22px; color: var(--blekk-myk); font-size: 0.92rem; }
+.dialog-info strong { color: var(--blekk); font-weight: 500; }
+
+.lukk {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.lukk svg { width: 18px; height: 18px; stroke: var(--blekk); stroke-width: 1.3; fill: none; stroke-linecap: round; }
+
+.felt { display: block; margin-bottom: 16px; }
+
+.felt span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graa);
+  margin-bottom: 4px;
+}
+
+.felt input {
+  width: 100%;
+  padding: 8px 0 7px;
+  border: 0;
+  border-bottom: 1px solid var(--linje);
+  border-radius: 0;
+  background: transparent;
+  font: 400 1.05rem var(--sans);
+  color: var(--blekk);
+}
+
+.felt input:focus { outline: none; border-bottom-width: 2px; padding-bottom: 6px; }
+.felt input[readonly] { border-bottom-style: dashed; color: var(--blekk-myk); }
+.felt input[aria-invalid="true"] { border-bottom-color: var(--aksent); }
+
+.felt-belop input { font-family: var(--serif); font-size: 1.7rem; }
+
+.felt-hjelp { display: block; margin-top: 4px; font-size: 0.8rem; color: var(--graa); }
+
+.avkrysning {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 0.88rem;
+  color: var(--blekk-myk);
+  margin: 6px 0 18px;
+}
+
+.avkrysning input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--blekk); flex: none; }
+
+.honning { position: absolute; left: -9999px; }
+
+.skjema-feil {
+  min-height: 1.4em;
+  margin: 0 0 12px;
+  color: var(--aksent);
+  font-size: 0.9rem;
+}
+
+.dialog-knapper { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+.kvittering { text-align: center; padding: 20px 0 6px; }
+.kvittering h2 { margin-bottom: 12px; }
+.kvittering p { color: var(--blekk-myk); margin: 0 auto 22px; max-width: 36ch; }
+
+/* Lysboks for å se tegningen i full størrelse */
+.lysboks {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--papir);
+}
+
+.lysboks::backdrop { background: var(--papir); }
+
+.lysboks-flate {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  padding: 56px 16px 24px;
+}
+
+.lysboks img {
+  max-width: 100%;
+  max-height: calc(100dvh - 90px);
+  object-fit: contain;
+  cursor: zoom-in;
+  box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.35);
+}
+
+.lysboks.zoom .lysboks-flate { place-items: start; }
+.lysboks.zoom img { max-width: none; max-height: none; cursor: zoom-out; }
+
+.lysboks .lukk { position: fixed; right: 14px; top: 12px; }
+
+/* ---------- Redusert bevegelse ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.bunn::before {
+  content: "";
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: 0;
+  height: 1px;
+  background: var(--linje-svak);
+}
+
+[hidden] { display: none !important; }
+
+.auksjon { position: relative; }
+
+.modus-2d .ark-2d.avslor img { animation: avslor 1.6s cubic-bezier(.6,.05,.3,1) both; }
+
+@keyframes avslor {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}

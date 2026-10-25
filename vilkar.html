@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vilkår – [Kunstnerens navn]</title>
+  <meta name="description" content="Vilkår for budgivning, betaling og frakt.">
+  <meta name="theme-color" content="#fbfaf6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 26 C10 8 22 6 27 14' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <script src="js/config.js"></script>
+  <script src="js/felles.js" defer></script>
+</head>
+<body data-side="vilkar">
+  <header class="topp">
+    <a class="merke" href="index.html" data-cfg="kunstnerNavn">[Kunstnerens navn]</a>
+    <nav class="meny" aria-label="Hovedmeny">
+      <a href="galleri.html" data-side="galleri">Galleri</a>
+      <a href="om.html" data-side="om">Om kunstneren</a>
+      <a href="vilkar.html" data-side="vilkar">Vilkår</a>
+    </nav>
+  </header>
+
+  <main class="side">
+    <div class="side-topp">
+      <p class="overlinje">Vilkår for auksjonen</p>
+      <h1 class="tittel-stor"><span data-understrek data-forsinkelse="300">Vilkår</span></h1>
+    </div>
+
+    <div class="vilkar">
+      <ol class="vilkar-meny" aria-label="Innhold">
+        <li><a href="#bindende">Bud er bindende</a></li>
+        <li><a href="#budgivning">Slik byr du</a></li>
+        <li><a href="#slutt">Når auksjonen slutter</a></li>
+        <li><a href="#betaling">Betaling</a></li>
+        <li><a href="#frakt">Frakt og henting</a></li>
+        <li><a href="#angrerett">Angrerett og retur</a></li>
+        <li><a href="#personvern">Personopplysninger</a></li>
+      </ol>
+
+      <div>
+        <section class="vilkar-del" id="bindende">
+          <h2><span>I</span> Bud er bindende</h2>
+          <p>Når du legger inn et bud, forplikter du deg til å kjøpe verket til budbeløpet dersom budet ditt er det høyeste når auksjonen slutter. Det samme gjelder når du velger «Kjøp nå». Du må være over 18 år for å by.</p>
+          <p>Har du lagt inn et bud ved en feil, for eksempel med feil beløp, ta kontakt så raskt som mulig på <a href="#" data-cfg-epost>[epost@eksempel.no]</a>.</p>
+        </section>
+
+        <section class="vilkar-del" id="budgivning">
+          <h2><span>II</span> Slik byr du</h2>
+          <ul>
+            <li>Hvert verk har en minstepris. Bud under minsteprisen godtas ikke.</li>
+            <li>Et nytt bud må være høyere enn det høyeste budet som vises på siden.</li>
+            <li>Budet sendes til kunstneren på e-post. Høyeste bud på siden oppdateres for hånd, så det kan gå litt tid før et nytt bud vises.</li>
+            <li>Kommer to like bud inn, gjelder det som ble mottatt først.</li>
+            <li>Med «Kjøp nå» kjøper du verket med en gang til den oppgitte prisen, og auksjonen avsluttes. Kjøp nå er bare mulig så lenge høyeste bud er lavere enn kjøp nå-prisen.</li>
+            <li>Kunstneren kan se bort fra bud som ser useriøse ut, eller der kontaktinformasjonen ikke stemmer.</li>
+          </ul>
+        </section>
+
+        <section class="vilkar-del" id="slutt">
+          <h2><span>III</span> Når auksjonen slutter</h2>
+          <p>Auksjonen slutter på tidspunktet som står under verket. Den som har det høyeste godkjente budet da, vinner.</p>
+          <ul>
+            <li>Vinneren får e-post fra kunstneren innen [2] dager, med beløp og betalingsinformasjon.</li>
+            <li>Andre budgivere får beskjed om at verket er solgt.</li>
+            <li>Betaler ikke vinneren innen fristen, kan verket tilbys den som hadde nest høyeste bud.</li>
+            <li>På siden vises verket deretter som «Solgt» eller «Auksjonen er avsluttet».</li>
+          </ul>
+        </section>
+
+        <section class="vilkar-del" id="betaling">
+          <h2><span>IV</span> Betaling</h2>
+          <p>Betaling skjer med [Vipps eller bankoverføring] innen [7] dager etter at du har fått bekreftelse. Verket sendes eller kan hentes når betalingen er mottatt. Alle priser er oppgitt i norske kroner.</p>
+        </section>
+
+        <section class="vilkar-del" id="frakt">
+          <h2><span>V</span> Frakt og henting</h2>
+          <p>Tegningene sendes flatt, beskyttet av syrefritt papir og stiv emballasje, som sporbar pakke med Posten. Frakt innenfor Norge koster [150] kr og kommer i tillegg til budet. Du kan også hente verket gratis i <span data-cfg="sted">[By]</span> etter avtale.</p>
+          <p>Frakt til utlandet avtales for hvert enkelt verk.</p>
+        </section>
+
+        <section class="vilkar-del" id="angrerett">
+          <h2><span>VI</span> Angrerett og retur</h2>
+          <p>Kjøper du som forbruker, har du 14 dagers angrerett fra du har mottatt verket, etter angrerettloven. Gi beskjed på e-post innen fristen, og send verket tilbake i samme stand og emballasje. Du får pengene tilbake senest 14 dager etter at vi har fått beskjed, men vi kan vente med tilbakebetalingen til verket er mottatt.</p>
+          <p>Kommer verket skadet frem, ta bilde av emballasjen og verket og kontakt oss med en gang.</p>
+        </section>
+
+        <section class="vilkar-del" id="personvern">
+          <h2><span>VII</span> Personopplysninger</h2>
+          <p>Navn, e-post, telefonnummer og budbeløp brukes bare til å gjennomføre auksjonen og kontakte deg om budet ditt. Opplysningene sendes til kunstnerens e-post via skjematjenesten Formspree, deles ikke med andre og slettes når salget er avsluttet. Navnet ditt vises aldri på nettsiden.</p>
+        </section>
+
+        <p class="merknad">[Merk til kunstneren: Dette er et utgangspunkt. Tilpass tall og frister i hakeparentes, og få gjerne vilkårene sett over før siden publiseres.]</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bunn">
+    <span>© <span data-aar></span> <span data-cfg="kunstnerNavn">[Kunstnerens navn]</span></span>
+    <a href="#" data-cfg-epost>[epost@eksempel.no]</a>
+  </footer>
+</body>
+</html>

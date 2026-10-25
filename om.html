@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Om kunstneren – [Kunstnerens navn]</title>
+  <meta name="description" content="Om kunstneren bak tusjtegningene.">
+  <meta name="theme-color" content="#fbfaf6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 26 C10 8 22 6 27 14' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <script src="js/config.js"></script>
+  <script src="js/felles.js" defer></script>
+</head>
+<body data-side="om">
+  <header class="topp">
+    <a class="merke" href="index.html" data-cfg="kunstnerNavn">[Kunstnerens navn]</a>
+    <nav class="meny" aria-label="Hovedmeny">
+      <a href="galleri.html" data-side="galleri">Galleri</a>
+      <a href="om.html" data-side="om">Om kunstneren</a>
+      <a href="vilkar.html" data-side="vilkar">Vilkår</a>
+    </nav>
+  </header>
+
+  <main class="side">
+    <div class="side-topp">
+      <p class="overlinje">Om kunstneren</p>
+      <h1 class="tittel-stor"><span data-understrek data-dobbel data-forsinkelse="300">Strek for strek</span></h1>
+    </div>
+
+    <div class="om">
+      <figure class="portrett" data-ramme data-forsinkelse="200">
+        <!-- Bytt ut bildet: legg et bilde av kunstneren i bilder/kunstner/ og endre src under -->
+        <img src="bilder/kunstner/portrett.webp" alt="[Kunstnerens navn] ved arbeidsbordet, med tusj og papir" width="1200" height="1500" loading="lazy" decoding="async">
+        <figcaption>[Bildetekst, f.eks. «I atelieret, høsten 2026». Foto: navn]</figcaption>
+      </figure>
+
+      <div class="brodtekst">
+        <p class="innledning">[Kort innledning: hvem kunstneren er, og hva som driver arbeidet. To–tre setninger holder.]</p>
+        <p>[Kunstnerens navn] tegner med tynne, svarte tusjer på hvitt papir. Hver tegning bygges opp av tusenvis av små streker, og kan ta fra noen dager til flere uker å fullføre. Det finnes ingen skisse under og ingen viskelær, så hver strek blir stående.</p>
+        <p>[Skriv litt om motivene: hva kunstneren ser etter, hvor ideene kommer fra, og hvorfor tusj og papir.]</p>
+        <p>Alle tegningene som selges her er originaler. Det lages ingen trykk eller kopier, så når en tegning er solgt, finnes den bare hos den nye eieren.</p>
+
+        <h2>Materialer</h2>
+        <p>[F.eks.: Pigmentbasert tusj i strekbredder fra 0,03 til 0,5 mm, på syrefritt papir som tåler lys og tid.]</p>
+
+        <h2>Kontakt</h2>
+        <p>Spørsmål om et verk, bestillinger eller utstillinger? Skriv til <a href="#" data-cfg-epost>[epost@eksempel.no]</a>.</p>
+        <p class="signatur" data-cfg="kunstnerNavn">[Kunstnerens navn]</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bunn">
+    <span>© <span data-aar></span> <span data-cfg="kunstnerNavn">[Kunstnerens navn]</span></span>
+    <a href="#" data-cfg-epost>[epost@eksempel.no]</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Galleri – [Kunstnerens navn]</title>
+  <meta name="description" content="Gå gjennom galleriet og by på originale tusjtegninger.">
+  <meta name="theme-color" content="#fbfaf6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 26 C10 8 22 6 27 14' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <script src="js/config.js"></script>
+  <script src="js/felles.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <link rel="modulepreload" href="js/galleri.js">
+</head>
+<body data-side="galleri" class="galleri-side">
+  <canvas id="scene-lerret" aria-hidden="true"></canvas>
+
+  <header class="topp">
+    <a class="merke" href="index.html" data-cfg="kunstnerNavn">[Kunstnerens navn]</a>
+    <nav class="meny" aria-label="Hovedmeny">
+      <a href="galleri.html" data-side="galleri">Galleri</a>
+      <a href="om.html" data-side="om">Om kunstneren</a>
+      <a href="vilkar.html" data-side="vilkar">Vilkår</a>
+    </nav>
+  </header>
+
+  <section class="scene" id="scene" aria-roledescription="galleri" aria-label="Verket som vises">
+    <figure class="ark-2d" id="ark-2d">
+      <div class="ark-ramme"><img id="ark-2d-bilde" alt="" decoding="async"></div>
+    </figure>
+    <p class="lasteindikator" id="lasteindikator">Henter tegningene …</p>
+
+    <div class="verk-nav">
+      <button class="pil forrige" id="forrige" type="button" aria-label="Forrige verk"><svg viewBox="0 0 44 18" aria-hidden="true"><path d="M42 9.4 C30 8.6 16 9.6 3 9"/><path d="M11 2 L2.5 9 L11.5 16"/></svg></button>
+      <button class="pil neste" id="neste" type="button" aria-label="Neste verk"><svg viewBox="0 0 44 18" aria-hidden="true"><path d="M2 8.8 C14 9.6 28 8.5 41 9"/><path d="M33 2 L41.5 9 L32.5 16"/></svg></button>
+    </div>
+    <p class="hint" id="hint">Scroll, bruk piltastene eller klikk på arket</p>
+    <div class="teller">
+      <span id="teller-tekst" aria-live="polite"></span>
+      <div class="teller-linje" id="teller-linje" role="group" aria-label="Velg verk"></div>
+    </div>
+  </section>
+
+  <article class="verk-info" id="verk-info" hidden>
+    <div class="verk-tekst">
+      <p class="verk-nr anim" id="verk-nr"></p>
+      <h1 class="verk-tittel anim" id="verk-tittel"></h1>
+      <p class="verk-meta anim" id="verk-meta"></p>
+      <p class="verk-beskrivelse anim" id="verk-beskrivelse"></p>
+    </div>
+
+    <div class="auksjon anim" id="auksjon" data-status="aktiv" aria-label="Auksjon">
+      <p class="auksjon-status"><span class="prikk" aria-hidden="true"></span><span id="a-status"></span></p>
+      <dl class="auksjon-tall" id="a-tall">
+        <div><dt>Høyeste bud</dt><dd id="a-bud" class="stort"></dd></div>
+        <div><dt>Minstepris</dt><dd id="a-min"></dd></div>
+        <div id="a-kjop-boks"><dt>Kjøp nå</dt><dd id="a-kjop"></dd></div>
+        <div><dt id="a-tid-etikett">Slutter om</dt><dd id="a-tid"></dd></div>
+      </dl>
+      <p class="sluttdato" id="a-dato"></p>
+      <div class="auksjon-knapper" id="a-knapper">
+        <button class="knapp knapp-hoved" id="knapp-bud" type="button">Legg inn bud</button>
+        <button class="knapp" id="knapp-kjop" type="button">Kjøp nå</button>
+      </div>
+      <div class="auksjon-slutt" id="a-slutt" hidden>
+        <strong id="a-slutt-tittel"></strong>
+        <p id="a-slutt-tekst"></p>
+      </div>
+    </div>
+  </article>
+
+  <dialog class="dialog" id="bud-dialog" aria-labelledby="bud-tittel">
+    <div class="dialog-innhold">
+      <button class="lukk" type="button" data-lukk aria-label="Lukk"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 2.5 L16 15.5"/><path d="M15.5 2 L2.5 16"/></svg></button>
+      <form id="bud-skjema" novalidate>
+        <p class="overlinje" id="bud-modus">Legg inn bud</p>
+        <h2 id="bud-tittel"></h2>
+        <p class="dialog-info" id="bud-info"></p>
+
+        <label class="felt"><span>Navn</span><input name="navn" autocomplete="name" required></label>
+        <label class="felt"><span>E-post</span><input name="email" type="email" autocomplete="email" required></label>
+        <label class="felt"><span>Telefon</span><input name="telefon" type="tel" autocomplete="tel" required></label>
+        <label class="felt felt-belop"><span id="belop-etikett">Ditt bud (kr)</span>
+          <input name="bud" id="bud-belop" inputmode="numeric" autocomplete="off" required>
+          <small class="felt-hjelp" id="belop-hjelp"></small>
+        </label>
+        <label class="avkrysning">
+          <input type="checkbox" name="godtar_vilkar" value="ja" required>
+          <span>Jeg forstår at budet er bindende, og godtar <a href="vilkar.html" target="_blank" rel="noopener">vilkårene</a>.</span>
+        </label>
+
+        <input type="hidden" name="verk">
+        <input type="hidden" name="verk_id">
+        <input type="hidden" name="type">
+        <input type="hidden" name="hoyeste_bud_da">
+        <input type="hidden" name="_subject">
+        <label class="honning" aria-hidden="true">Ikke fyll ut<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+
+        <p class="skjema-feil" id="skjema-feil" role="alert"></p>
+        <div class="dialog-knapper">
+          <button class="knapp" type="button" data-lukk>Avbryt</button>
+          <button class="knapp knapp-hoved" type="submit" id="send-bud">Send bud</button>
+        </div>
+      </form>
+      <div class="kvittering" id="kvittering" hidden>
+        <p class="overlinje">Mottatt</p>
+        <h2>Takk for budet</h2>
+        <p id="kvittering-tekst"></p>
+        <button class="knapp" type="button" data-lukk>Tilbake til galleriet</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="lysboks" id="lysboks" aria-label="Tegningen i full størrelse">
+    <button class="lukk" type="button" data-lukk aria-label="Lukk"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 2.5 L16 15.5"/><path d="M15.5 2 L2.5 16"/></svg></button>
+    <div class="lysboks-flate"><img id="lysboks-bilde" alt=""></div>
+  </dialog>
+
+  <noscript><p style="padding:2rem var(--gutter)">Galleriet trenger JavaScript for å vise tegningene og auksjonene.</p></noscript>
+
+  <script type="module" src="js/galleri.js"></script>
+</body>
+</html>
